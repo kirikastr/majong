@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style type="text/css">
+        .item {
+            width: 150px;
+            height: 150px;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            margin-top: 20px;
+            margin-left: 20px;
+
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            height: 200px;
+            width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .active{
+            border: 3px solid green;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="row">
+    </div>
+    <script type="text/javascript">
+    //див-родитель
+    let row = document.querySelector(".row");
+    let past_item = null;
+
+
+    //хранение картинок
+    let images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "1.png", "2.png", "3.png", "4.png", "5.png", "6.png"];
+
+    for(let i = 0 ; i < 12 ; i = i + 1){
+        let div = document.createElement("div");
+        row.appendChild(div);
+        div.classList.add("item");
+        let index = getRandom(images.length -1);
+
+        div.style.backgroundImage = "url(" +images[index]  + ")";
+        div.me = images[index];
+
+        images.splice(index,1);
+        div.onclick = function(){
+            div.classList.add("active")
+
+            if(past_item == null){
+                past_item = div;
+            }
+            else if(past_item.me == div.me){
+                past_item.style.opacity = "0";
+                div.style.opacity = "0"
+                past_item = null
+            }
+            else if(past_item.me != div.me){
+                past_item.classList.remove("active")
+                past_item = null
+                div.classList.remove("active")
+            }
+            console.log(div.me)
+        }
+    }
+
+
+    function getRandom(number){
+        let rand = Math.random() * number
+        let round = Math.round(rand);
+        return round
+    }
+
+
+
+    </script>
+</body>
+</html>
